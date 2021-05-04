@@ -1,0 +1,30 @@
+GET http://127.0.0.1:80/professors/count
+###
+GET http://127.0.0.1:80/professors/
+###
+GET http://127.0.0.1:80/professors/15
+###
+DELETE http://127.0.0.1:80/professors/13
+###
+POST http://127.0.0.1:80/professors/
+Content-Type: application/json
+
+{
+  "name": "Фиксик А.Б.H",
+  "address": "Луна22",
+  "phone": "+78888888898",
+  "payment": 25.0
+}
+
+###
+PUT http://127.0.0.1:80/professors/
+Content-Type: application/json
+
+{
+  "id": 11,
+  "name": "Фиксик А.Б.H",
+  "address": "Луна22",
+  "phone": "+78888888898",
+  "payment": 28.0
+}
+
