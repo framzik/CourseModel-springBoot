@@ -9,14 +9,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "professors")
-@NamedQueries({
-        @NamedQuery(name = "findAllProfessors", query = "select p from Professor p"),
-        @NamedQuery(name = "countAllProfessors", query = "select count(p) from Professor p "),
-        @NamedQuery(name = "deleteProfessorsById", query = "delete from Professor p where p.id = :id"),
-        @NamedQuery(name = "findProfessorById", query = "select p from Professor p where p.id = :id"),
-        @NamedQuery(name = "getProfessorCourse", query = "select c from Course c left join CourseProfessor cp" +
-                " on c.id=cp.courseId where cp.professorsId = :professorId")
-})
 public class Professor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

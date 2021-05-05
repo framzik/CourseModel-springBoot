@@ -40,10 +40,6 @@
                         <td>
                             <a class="btn btn-success"
                                th:href="@{/professors/{id}/edit(id=${professor.getId()})}">Edit</a>
-                            <form th:object="${professor}" th:action="@{/professors/{id}(id=${professor.getId()})}"
-                                  th:method="delete">
-                                <input class="btn btn-danger" type="submit" value="Delete"/>
-                            </form>
                         </td>
                     </tr>
                 </table>
