@@ -3,6 +3,7 @@ package ru.khrebtov.unitest.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.khrebtov.unitest.entity.Course;
 import ru.khrebtov.unitest.entity.Student;
 import ru.khrebtov.unitest.entity.dtoEntity.DtoCourse;
@@ -12,18 +13,22 @@ import ru.khrebtov.unitest.repo.StudentRepository;
 import ru.khrebtov.unitest.repo.StudyCourseRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
 public class StudentService implements AbstractService<DtoStudent> {
     private final StudentRepository studentRepository;
     private final StudyCourseRepository studyCourseRepository;
+    private final StudyCourseService studyCourseService;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, StudyCourseRepository studyCourseRepository) {
+    public StudentService(StudentRepository studentRepository, StudyCourseRepository studyCourseRepository, StudyCourseService studyCourseService) {
         this.studentRepository = studentRepository;
         this.studyCourseRepository = studyCourseRepository;
+        this.studyCourseService = studyCourseService;
     }
 
     @Override
@@ -37,7 +42,8 @@ public class StudentService implements AbstractService<DtoStudent> {
         return dtoStudents;
     }
 
-    private DtoStudent getDtoStudent(Student student) {
+    @Transactional
+    public DtoStudent getDtoStudent(Student student) {
         DtoStudent dtoStudent = new DtoStudent(student);
         Long studentId = dtoStudent.getId();
         List<DtoStudyCourse> dtoStudyCourses = new ArrayList<>();
@@ -54,7 +60,8 @@ public class StudentService implements AbstractService<DtoStudent> {
         return dtoStudent;
     }
 
-    private Float getAverageRatingForAllCourses(List<DtoStudyCourse> studyCourses) {
+    @Transactional
+    public Float getAverageRatingForAllCourses(List<DtoStudyCourse> studyCourses) {
         float sumAverageRating = 0F;
         int countStudyCoursesWithRatings = 0;
         for (DtoStudyCourse s : studyCourses) {
@@ -106,10 +113,26 @@ public class StudentService implements AbstractService<DtoStudent> {
         studentRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void saveOrUpdate(DtoStudent student) {
         log.info("Saving student with id {}", student.getId());
         studentRepository.saveOrUpdate(new Student(student.getId(), student.getName(), student.getAddress(),
                 student.getPhone(), student.getEmail(), student.getRecordBook(), student.getProgress()));
+    }
+
+
+    public void signIntoCourse(DtoStudyCourse studyCourse) {
+        log.info("Adding student into course");
+        studyCourseService.insert(studyCourse);
+    }
+
+
+    public List<DtoCourse> getStudentCourses(Long studentId) {
+        log.info("Get student Courses for student id {}", studentId);
+        List<DtoCourse> courses = new ArrayList<>();
+        List<Course> studentCourses = studentRepository.getStudentCourses(studentId);
+        studentCourses.forEach(course ->courses.add(new DtoCourse(course)));
+        return courses;
     }
 }

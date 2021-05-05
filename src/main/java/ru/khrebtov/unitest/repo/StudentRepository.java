@@ -2,6 +2,7 @@ package ru.khrebtov.unitest.repo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.khrebtov.unitest.entity.Course;
 import ru.khrebtov.unitest.entity.Student;
 import ru.khrebtov.unitest.entity.StudyCourse;
 
@@ -43,5 +44,12 @@ public class StudentRepository {
             throw new IllegalArgumentException("Передан  не существующий студент (id=null)");
         }
         return studentRepo.getStudentStudyCourses(studentId);
+    }
+
+    public List<Course> getStudentCourses(Long studentId) {
+        if (studentId == null) {
+            throw new IllegalArgumentException("Передан  не существующий студент (id=null)");
+        }
+        return studentRepo.getStudentCourses(studentId);
     }
 }

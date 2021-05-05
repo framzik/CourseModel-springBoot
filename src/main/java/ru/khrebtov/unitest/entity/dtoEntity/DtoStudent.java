@@ -44,6 +44,14 @@ public class DtoStudent {
         }
     }
 
+    public DtoStudent(Student student, List<DtoStudyCourse> studyCourses) {
+        this(student.getId(), student.getName(), student.getAddress(), student.getPhone(), student.getEmail(),
+                student.getRecordBook(), student.getProgress());
+        if (studyCourses != null) {
+            this.studyCourses = studyCourses;
+        }
+    }
+
     public Long getId() {
         return id;
     }

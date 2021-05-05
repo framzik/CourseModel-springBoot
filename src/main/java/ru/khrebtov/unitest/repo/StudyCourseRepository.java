@@ -53,4 +53,8 @@ public class StudyCourseRepository {
     public Double getAverageRating(Long id) {
         return studyCourseRepo.getAverageRating(id);
     }
+
+    public StudyCourse findByCourseIdAndStudentId(Long courseId, Long studentId) {
+        return studyCourseRepo.findByCourseIdAndStudentId(courseId, studentId);
+    }
 }

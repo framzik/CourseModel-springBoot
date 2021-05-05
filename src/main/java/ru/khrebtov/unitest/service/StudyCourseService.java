@@ -1,9 +1,8 @@
 package ru.khrebtov.unitest.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.khrebtov.unitest.entity.Student;
+import org.springframework.transaction.annotation.Transactional;
 import ru.khrebtov.unitest.entity.StudyCourse;
 import ru.khrebtov.unitest.entity.dtoEntity.DtoStudyCourse;
 import ru.khrebtov.unitest.repo.StudyCourseRepository;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class StudyCourseService implements AbstractService<DtoStudyCourse>{
+public class StudyCourseService implements AbstractService<DtoStudyCourse> {
     private final StudyCourseRepository studyCourseRepository;
 
     public StudyCourseService(StudyCourseRepository studyCourseRepository) {
@@ -31,7 +30,8 @@ public class StudyCourseService implements AbstractService<DtoStudyCourse>{
         return list;
     }
 
-    private DtoStudyCourse getDtoStudyCourse(StudyCourse studyCourse) {
+    @Transactional
+    public DtoStudyCourse getDtoStudyCourse(StudyCourse studyCourse) {
         Long studyCourseId = studyCourse.getId();
         studyCourse.setRating(studyCourseRepository.getRatings(studyCourseId));
         studyCourse.setStudent(studyCourseRepository.getStudentByStudyCourseId(studyCourseId));
@@ -78,6 +78,7 @@ public class StudyCourseService implements AbstractService<DtoStudyCourse>{
         studyCourseRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void saveOrUpdate(DtoStudyCourse studyCourse) {
         log.info("Saving studyCourse with id {}", studyCourse.getId());

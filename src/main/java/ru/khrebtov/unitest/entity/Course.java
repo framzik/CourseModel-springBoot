@@ -1,11 +1,12 @@
 package ru.khrebtov.unitest.entity;
 
 
-
 import ru.khrebtov.unitest.entity.dtoEntity.DtoCourse;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -47,13 +48,13 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Student> students;
+    private List<Student> students;
 
     @OneToMany(mappedBy = "course")
     @Transient
-    private Set<StudyCourse> studyCourses;
+    private List<StudyCourse> studyCourses;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
@@ -61,7 +62,7 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "professors_id")
     )
-    private Set<Professor> professors;
+    private List<Professor> professors;
 
 
     public Course() {
@@ -78,17 +79,17 @@ public class Course {
         this(course.getId(), course.getName(), course.getNumber(), course.getCost());
 
         if (course.getStudyCourses() != null) {
-            this.studyCourses = new HashSet<>();
+            this.studyCourses = new ArrayList<>();
             course.getStudyCourses().forEach(studyCourse -> studyCourses.add(new StudyCourse(studyCourse)));
         }
 
         if (course.getStudents() != null) {
-            this.students = new HashSet<>();
+            this.students = new ArrayList<>();
             course.getStudents().forEach(student -> students.add(new Student(student)));
         }
 
         if (course.getProfessors() != null) {
-            this.professors = new HashSet<>();
+            this.professors = new ArrayList<>();
             course.getProfessors().forEach(p -> professors.add(new Professor(p)));
         }
 
@@ -127,27 +128,27 @@ public class Course {
         this.cost = cost;
     }
 
-    public Set<Student> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 
-    public Set<StudyCourse> getStudyCourses() {
+    public List<StudyCourse> getStudyCourses() {
         return studyCourses;
     }
 
-    public void setStudyCourses(Set<StudyCourse> studyCourses) {
+    public void setStudyCourses(List<StudyCourse> studyCourses) {
         this.studyCourses = studyCourses;
     }
 
-    public Set<Professor> getProfessors() {
+    public List<Professor> getProfessors() {
         return professors;
     }
 
-    public void setProfessors(Set<Professor> professors) {
+    public void setProfessors(List<Professor> professors) {
         this.professors = professors;
     }
 

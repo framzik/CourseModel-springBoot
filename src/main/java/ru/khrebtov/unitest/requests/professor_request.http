@@ -1,4 +1,4 @@
-GET http://127.0.0.1:80/professors/count
+GET http://127.0.0.1:80/rest/professors/count
 ###
 GET http://127.0.0.1:80/rest/professors/
 ###

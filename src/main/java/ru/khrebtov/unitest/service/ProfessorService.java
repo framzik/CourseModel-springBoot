@@ -3,6 +3,7 @@ package ru.khrebtov.unitest.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.khrebtov.unitest.entity.Professor;
 import ru.khrebtov.unitest.entity.dtoEntity.DtoProfessor;
 import ru.khrebtov.unitest.repo.ProfessorRepository;
@@ -72,6 +73,7 @@ public class ProfessorService implements AbstractService<DtoProfessor> {
     }
 
     @Override
+    @Transactional
     public void saveOrUpdate(DtoProfessor dtoProfessor) {
         log.info("Saving/updating professor with id {}", dtoProfessor.getId());
         Professor professor = new Professor(dtoProfessor);
