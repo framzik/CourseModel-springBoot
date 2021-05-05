@@ -9,11 +9,11 @@ public interface AbstractService<T> {
 
     Long count();
 
-    void insert(T professor);
+    void insert(T entity);
 
-    void update(T professor);
+    void update(T entity);
 
     void deleteById(Long id);
 
-    void saveOrUpdate(T professor);
+    void saveOrUpdate(T entity);
 }

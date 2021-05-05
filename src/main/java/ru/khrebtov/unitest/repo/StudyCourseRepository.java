@@ -3,7 +3,6 @@ package ru.khrebtov.unitest.repo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.khrebtov.unitest.entity.Course;
-import ru.khrebtov.unitest.entity.Professor;
 import ru.khrebtov.unitest.entity.Student;
 import ru.khrebtov.unitest.entity.StudyCourse;
 
@@ -49,5 +48,9 @@ public class StudyCourseRepository {
 
     public Course getCourseByStudyCourseId(Long id) {
         return studyCourseRepo.getCourseByStudyCourseId(id);
+    }
+
+    public Double getAverageRating(Long id) {
+        return studyCourseRepo.getAverageRating(id);
     }
 }

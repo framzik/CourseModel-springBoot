@@ -18,4 +18,7 @@ public interface StudyCourseRepo extends JpaRepository<StudyCourse, Long> {
 
     @Query("select c from Course c left join StudyCourse sc on c.id=sc.course.id where sc.id = ?1")
     Course getCourseByStudyCourseId(Long id);
+
+    @Query("select 1.0*sum(r.rating)/count(r) from Rating r where r.studyCourseId=?1")
+    Double getAverageRating(Long id);
 }
