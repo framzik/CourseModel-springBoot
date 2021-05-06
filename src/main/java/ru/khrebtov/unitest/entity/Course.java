@@ -11,22 +11,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "course")
-@NamedQueries({
-        @NamedQuery(name = "findAllCourse", query = "select c from Course c "),
-        @NamedQuery(name = "countAllCourse", query = "select count(c) from Course c "),
-        @NamedQuery(name = "deleteCourseById", query = "delete from Course c where c.id = :id"),
-        @NamedQuery(name = "findCourseByNumber", query = "select c from Course c where c.number = :number"),
-        @NamedQuery(name = "findCourseById", query = "select c from Course c where c.id = :id"),
-        @NamedQuery(name = "getCourseStudents", query = "select s from Student s left join StudyCourse cs " +
-                "on s.id=cs.student.id where cs.course.id = :courseId"),
-        @NamedQuery(name = "getCountCourseStudents", query = "select count(s) from Student s left join StudyCourse cs " +
-                "on s.id=cs.student.id where cs.course.id = :courseId"),
-        @NamedQuery(name = "deleteStudentFromCourse", query = "delete from StudyCourse cs " +
-                "where cs.course.id=:courseId AND cs.student.id=:studentId"),
-        @NamedQuery(name = "getCourseStudy", query = "select sc from StudyCourse sc  where sc.course.id = :courseId "),
-        @NamedQuery(name = "getCourseProfessor", query = "select p from Professor p left join CourseProfessor cp" +
-                " on p.id=cp.professorsId where cp.courseId = :courseId")
-})
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,16 +10,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "students")
-@NamedQueries({
-        @NamedQuery(name = "findAll", query = "select s from Student s"),
-        @NamedQuery(name = "countAll", query = "select count(s) from Student s"),
-        @NamedQuery(name = "deleteById", query = "delete from Student s where s.id = :id"),
-        @NamedQuery(name = "findByName", query = "select s from Student s where s.name = :name"),
-        @NamedQuery(name = "findById", query = "select s from Student s where s.id = :id"),
-        @NamedQuery(name = "getStudentCourses", query = "select c from Course c left join StudyCourse cs " +
-                "on c.id=cs.course.id where cs.student.id = :studentId"),
-        @NamedQuery(name = "getStudentStudyCourse", query = "select sc from StudyCourse sc where sc.student.id = :studentId")
-})
 public class Student implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
